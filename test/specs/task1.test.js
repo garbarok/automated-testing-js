@@ -1,5 +1,11 @@
 const URL = 'https://the-internet.herokuapp.com';
 
+async function customClick(element) {
+  await element.waitForDisplayed();
+  await element.waitForEnabled();
+  await element.click();
+}
+
 describe('The-Internet Website General Tests', () => {
   it('should have the correct title on landing page', async () => {
     await browser.url(URL);
@@ -151,5 +157,69 @@ describe('JavaScript Alerts Page Tests', () => {
 
     const result = await $('#result');
     expect(await result.getText()).toEqual('You entered: EPAM');
+  });
+});
+
+describe('Dropdown Test', () => {
+  it('should select the correct option from the dropdown', async () => {
+    await browser.url(`${URL}/dropdown`);
+    const dropdown = await $('#dropdown');
+    await dropdown.selectByVisibleText('Option 2');
+    expect(await dropdown.getValue()).toEqual('2');
+  });
+});
+
+describe('Checkboxes Test', () => {
+  it('should toggle checkboxes correctly', async () => {
+    await browser.url(`${URL}/checkboxes`);
+
+    const checkboxes = await $$('input[type="checkbox"]');
+
+    const toggleCheckbox = async (checkbox) => {
+      const initialSelectedState = await checkbox.isSelected();
+
+      await customClick(checkbox);
+      expect(await checkbox.isSelected()).toBe(!initialSelectedState);
+      await customClick(checkbox);
+      expect(await checkbox.isSelected()).toBe(initialSelectedState);
+    };
+    await Promise.all(checkboxes.map(toggleCheckbox));
+  });
+});
+
+describe('Frames Test', () => {
+  it('should switch to iframe and type text', async () => {
+    await browser.url(`${URL}/iframe`);
+    const iframe = await $('#mce_0_ifr');
+    await browser.switchToFrame(iframe);
+    const textArea = await $('#tinymce');
+    await textArea.setValue('Testing iframe');
+    expect(await textArea.getText()).toEqual('Testing iframe');
+  });
+});
+
+describe('Add/Remove Elements Page Test', () => {
+  it('should add and remove elements correctly', async () => {
+    await browser.url(
+      'https://the-internet.herokuapp.com/add_remove_elements/',
+    );
+
+    const addElementButton = await $('//button[text()="Add Element"]');
+
+    // Click the "Add Element" button twice
+    await customClick(addElementButton);
+    await customClick(addElementButton);
+
+    // Verify that two "Delete" buttons have been added
+    const deleteButtons = await $$('button.added-manually');
+    expect(deleteButtons.length).toBe(2);
+
+    // Remove the elements
+    await customClick(deleteButtons[0]);
+    await customClick(deleteButtons[1]);
+
+    // No "Delete" buttons remain
+    const remainingDeleteButtons = await $$('//button[text()="Delete"]');
+    expect(remainingDeleteButtons.length).toBe(0);
   });
 });
