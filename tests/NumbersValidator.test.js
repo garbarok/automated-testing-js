@@ -1,5 +1,5 @@
 const { expect } = require('chai');
-const NumbersValidator = require('../code');
+const NumbersValidator = require('../NumbersValidator');
 
 describe('NumbersValidator', () => {
   const validator = new NumbersValidator();
@@ -26,7 +26,9 @@ describe('NumbersValidator', () => {
     });
 
     it('should throw error for arrays with non-number values', () => {
-      expect(() => validator.getEvenNumbersFromArray([1, 'text', 3])).to.throw();
+      expect(() =>
+        validator.getEvenNumbersFromArray([1, 'text', 3]),
+      ).to.throw();
     });
 
     it('should throw error for non-array values', () => {
