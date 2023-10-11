@@ -1,5 +1,3 @@
-const URL = 'https://the-internet.herokuapp.com';
-
 async function customClick(element) {
   await element.waitForDisplayed();
   await element.waitForEnabled();
@@ -8,14 +6,14 @@ async function customClick(element) {
 
 describe('The-Internet Website General Tests', () => {
   it('should have the correct title on landing page', async () => {
-    await browser.url(URL);
+    await browser.url('/');
     const pageTitle = await browser.getTitle();
     expect(pageTitle).toEqual('The Internet');
   });
 
   it('should load within a reasonable time frame', async () => {
     const startTime = new Date().getTime();
-    await browser.url(`${URL}/large`);
+    await browser.url('/large');
     const endTime = new Date().getTime();
     const loadTime = endTime - startTime;
     await expect(loadTime).toBeLessThan(5000); // expect page to load within 5 seconds
@@ -24,7 +22,7 @@ describe('The-Internet Website General Tests', () => {
 
 describe('Challenging DOM Page Tests', () => {
   it('should have the correct title', async () => {
-    await browser.url(`${URL}/challenging_dom`);
+    await browser.url(`/challenging_dom`);
     const title = await $('h3=Challenging DOM');
     await expect(title).toBeDisplayed();
   });
@@ -38,7 +36,7 @@ describe('Login Functionality Tests', () => {
   let submitButton;
 
   beforeEach(async () => {
-    await browser.url(`${URL}/login`);
+    await browser.url(`/login`);
     usernameInput = await $('//input[@id="username"]');
     passwordInput = await $('input[type="password"]');
     submitButton = await $('//button[@type="submit"]');
@@ -83,7 +81,7 @@ describe('Login Functionality Tests', () => {
   });
 
   it('should not allow login with invalid password', async () => {
-    await browser.url(`${URL}/login`);
+    await browser.url(`/login`);
     await usernameInput.setValue(user);
     await passwordInput.setValue('invalidPassword');
     await submitButton.click();
@@ -93,7 +91,7 @@ describe('Login Functionality Tests', () => {
   });
 
   it('should not allow login with empty username and password', async () => {
-    await browser.url(`${URL}/login`);
+    await browser.url(`/login`);
     await submitButton.click();
 
     const errorMessage = await $('#flash');
@@ -101,7 +99,7 @@ describe('Login Functionality Tests', () => {
   });
 
   it('should not allow login with empty username', async () => {
-    await browser.url(`${URL}/login`);
+    await browser.url(`/login`);
     await passwordInput.setValue(password);
     await submitButton.click();
 
@@ -110,7 +108,7 @@ describe('Login Functionality Tests', () => {
   });
 
   it('should not allow login with empty password', async () => {
-    await browser.url(`${URL}/login`);
+    await browser.url(`/login`);
     await usernameInput.setValue(user);
     await submitButton.click();
 
@@ -121,7 +119,7 @@ describe('Login Functionality Tests', () => {
 
 describe('Dynamic Content Page Tests', () => {
   it('should load images correctly', async () => {
-    await browser.url(`${URL}/dynamic_content`);
+    await browser.url(`/dynamic_content`);
     const images = await $$('img');
 
     const isDisplayedPromises = images.map((image) => image.isDisplayed());
@@ -135,7 +133,7 @@ describe('Dynamic Content Page Tests', () => {
 
 describe('JavaScript Alerts Page Tests', () => {
   it('should show and accept JS Alert', async () => {
-    await browser.url(`${URL}/javascript_alerts`);
+    await browser.url(`/javascript_alerts`);
 
     const jsAlertButton = await $('//button[text()="Click for JS Alert"]');
     await jsAlertButton.click();
@@ -147,7 +145,7 @@ describe('JavaScript Alerts Page Tests', () => {
   });
 
   it('should show, accept input, and accept JS Prompt', async () => {
-    await browser.url(`${URL}/javascript_alerts`);
+    await browser.url(`/javascript_alerts`);
 
     const jsPromptButton = await $('//button[text()="Click for JS Prompt"]');
     await jsPromptButton.click();
@@ -162,7 +160,7 @@ describe('JavaScript Alerts Page Tests', () => {
 
 describe('Dropdown Test', () => {
   it('should select the correct option from the dropdown', async () => {
-    await browser.url(`${URL}/dropdown`);
+    await browser.url(`/dropdown`);
     const dropdown = await $('#dropdown');
     await dropdown.selectByVisibleText('Option 2');
     expect(await dropdown.getValue()).toEqual('2');
@@ -171,7 +169,7 @@ describe('Dropdown Test', () => {
 
 describe('Checkboxes Test', () => {
   it('should toggle checkboxes correctly', async () => {
-    await browser.url(`${URL}/checkboxes`);
+    await browser.url(`/checkboxes`);
 
     const checkboxes = await $$('input[type="checkbox"]');
 
@@ -189,7 +187,7 @@ describe('Checkboxes Test', () => {
 
 describe('Frames Test', () => {
   it('should switch to iframe and type text', async () => {
-    await browser.url(`${URL}/iframe`);
+    await browser.url(`/iframe`);
     const iframe = await $('#mce_0_ifr');
     await browser.switchToFrame(iframe);
     const textArea = await $('#tinymce');
