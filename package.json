@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "mocha ./tests/NumbersValidator.test.js",
-    "coverage": "c8 mocha ./tests/NumbersValidator.test.js",
+    "test": "mocha ./test/NumbersValidator.test.js",
+    "coverage": "c8 mocha ./test/NumbersValidator.test.js",
     "lint": "eslint . --ext .js --fix",
     "wdio": "wdio run wdio.conf.js"
   },
