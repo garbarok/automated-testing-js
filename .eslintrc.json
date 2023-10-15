@@ -5,13 +5,17 @@
         "node": true,
         "mocha": true
     },
-    "extends": "airbnb-base",
+    "extends": [
+        "airbnb-base",
+        "plugin:wdio/recommended"
+    ],
     "parserOptions": {
         "ecmaVersion": "latest"
     },
     "plugins": [
-    "chai-friendly"
-],
+        "chai-friendly",
+        "wdio"
+    ],
     "rules": {
         "class-methods-use-this": "off",
         "arrow-parens": "off",
@@ -19,6 +23,6 @@
         "func-names": "off",
         "object-curly-newline": "off",
         "no-unused-expressions": 0,
-    "chai-friendly/no-unused-expressions": 2
+        "chai-friendly/no-unused-expressions": 2
     }
 }

@@ -1,5 +1,5 @@
 const { expect } = require('chai');
-const NumbersValidator = require('../code');
+const NumbersValidator = require('../NumbersValidator');
 
 describe('NumbersValidator', () => {
   const validator = new NumbersValidator();
