@@ -1,3 +1,5 @@
+const { customClick } = require('./test/helpers/customClick');
+
 exports.config = {
   //
   // ====================
@@ -22,7 +24,7 @@ exports.config = {
   // then the current working directory is where your `package.json` resides, so `wdio`
   // will be called from there.
   //
-  specs: ['./test/specs/**/*.js'],
+  specs: ['./test/task1/specs/**/*.js', './test/task3/specs/**/*.js'],
   // Patterns to exclude.
   exclude: [
     // 'path/to/excluded/files'
@@ -51,7 +53,7 @@ exports.config = {
   //
   capabilities: [
     {
-      browserName: 'chrome',
+      browserName: 'firefox',
       acceptInsecureCerts: true,
     },
   ],
@@ -191,8 +193,9 @@ exports.config = {
    * @param {Array.<String>} specs        List of spec file paths that are to be run
    * @param {object}         browser      instance of created browser/device session
    */
-  // before: function (capabilities, specs) {
-  // },
+  before(capabilities, specs, browser) {
+    global.customClick = customClick;
+  },
   /**
    * Runs before a WebdriverIO command gets executed.
    * @param {string} commandName hook command name

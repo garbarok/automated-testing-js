@@ -20,8 +20,8 @@ class NumbersValidator {
    */
   getEvenNumbersFromArray(arrayOfNumbers) {
     if (
-      Array.isArray(arrayOfNumbers) &&
-      arrayOfNumbers.every((item) => typeof item === 'number')
+      Array.isArray(arrayOfNumbers)
+      && arrayOfNumbers.every((item) => typeof item === 'number')
     ) {
       return arrayOfNumbers.filter(this.isNumberEven);
     }

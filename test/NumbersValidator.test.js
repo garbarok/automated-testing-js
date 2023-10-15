@@ -26,9 +26,7 @@ describe('NumbersValidator', () => {
     });
 
     it('should throw error for arrays with non-number values', () => {
-      expect(() =>
-        validator.getEvenNumbersFromArray([1, 'text', 3]),
-      ).to.throw();
+      expect(() => validator.getEvenNumbersFromArray([1, 'text', 3])).to.throw();
     });
 
     it('should throw error for non-array values', () => {
